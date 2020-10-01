@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         ジョブカン出勤簿　過不足自動計算
-// @version      0.1
+// @version      0.2.0
 // @description  月末に向けた稼働時間を調整しやすいように、休暇を含めた過不足を自動計算します。
-// @match        https://ssl.jobcan.jp/employee/attendance
+// @match        https://ssl.jobcan.jp/employee/attendance*
 // ==/UserScript==
 
 (function () {
