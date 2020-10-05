@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         ジョブカン出勤簿　過不足自動計算
-// @version      0.2.0
+// @version      0.3
 // @description  月末に向けた稼働時間を調整しやすいように、休暇を含めた過不足を自動計算します。
 // @match        https://ssl.jobcan.jp/employee/attendance*
 // ==/UserScript==
@@ -23,10 +23,21 @@
         return minutes;
     }
 
+    function minutesToHoursMinutes(allMinutes) {
+        const abs = Math.abs(allMinutes);
+        const hours = Math.floor(abs / 60);
+        const minutes = abs - hours * 60;
+        if (hours > 0) {
+            return `${hours}時間${minutes}分`;
+        } else {
+            return `${minutes}分`;
+        }
+    }
+
     // 所定過不足累計: おそらく月初から当日までと思われるので、これを使う
     const laborHoursMinutes = timeToMinutes(document.querySelector("#search-result > div.infotpl > table:nth-child(3) > tbody > tr:nth-child(14) > td").innerText);
 
-    // 各種休暇すべて合計
+    // 各種休暇すべて合計。とりあえず 1.0日8時間、1.5日→12時間など計算してみます
     const holidaysMinutes = Array
         .from(document.querySelectorAll("#search-result > div.infotpl > table:nth-child(4) > tbody:nth-child(4) > tr > td"))
         .map(e => daysToMinutes(e.innerText))
@@ -35,9 +46,10 @@
     const overAndShorts = laborHoursMinutes + holidaysMinutes;
 
     const messageBar = document.createElement("span")
+    const hourMin = minutesToHoursMinutes(overAndShorts);
     messageBar.innerText = overAndShorts >= 0
-        ? `今日まで: ${overAndShorts}分 残業してます`
-        : `今日まで: ${overAndShorts}分 不足してるようです`;
+        ? `今日まで: ${hourMin} 残業してます`
+        : `今日まで: ${hourMin} 不足してるようです`;
     messageBar.style = `
        font-size: 50px;
        color: rgb(240, 240, 240);
