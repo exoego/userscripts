@@ -35,7 +35,7 @@
     }
 
     // 所定過不足累計: おそらく月初から当日までと思われるので、これを使う
-    const laborHoursMinutes = timeToMinutes(document.querySelector("#search-result > div.infotpl > table:nth-child(3) > tbody > tr:nth-child(14) > td").innerText);
+    const laborHoursMinutes = timeToMinutes(document.querySelector("#search-result > div.row > div:nth-child(3) > div.card > div.card-body > table > tbody > tr:nth-child(14) > td").innerText);
 
     // 各種休暇すべて合計。とりあえず 1.0日8時間、1.5日→12時間など計算してみます
     const holidaysMinutes = Array
