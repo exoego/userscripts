@@ -39,7 +39,7 @@
 
     // 各種休暇すべて合計。とりあえず 1.0日8時間、1.5日→12時間など計算してみます
     const holidaysMinutes = Array
-        .from(document.querySelectorAll("#search-result > div.infotpl > table:nth-child(4) > tbody:nth-child(4) > tr > td"))
+        .from(document.querySelectorAll("#search-result > div.row > div:nth-child(4) > div:nth-child(2) > div.card-body > table > tbody > tr > td"))
         .map(e => daysToMinutes(e.innerText))
         .reduce((minute, sum) => minute + sum, 0);
 
