@@ -43,7 +43,8 @@
                 // 半休か全休か
                 const vacationLength = vacationTitle.includes("0.5") ? 0.5 : 1.0;
 
-                const date = new Date(showedYear, showedMonth - 1, index + 1)
+                // 今日自体は除きたいので、翌日の 0:00とする
+                const date = new Date(showedYear, showedMonth - 1, index + 2)
                 if (date < today) {
                     return {past: vacationLength, future: 0}
                 } else {
